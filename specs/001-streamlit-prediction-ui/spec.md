@@ -44,7 +44,7 @@
 - **Page 2 — Infrastructure**: int, circ
 - **Page 3 — Collision**: col, choc_mode, manv_mode
 - **Page 4 — Conducteur**: driver_age_bucket, driver_trajet_family
-- **Page 5 — Conditions & minute**: lum, atm, minute
+- **Page 5 — Conditions & tranche horaire**: lum, atm, time_bucket
 - **Page 6 — Récap & prédiction**: résumé + bouton "Prédire"
 
 **Acceptance Scenarios**:
@@ -119,21 +119,21 @@
 
 ---
 
-#### US-06 — Validation de minute sans saisie libre (Priority: P1)
+#### US-06 — Validation de time_bucket sans saisie libre (Priority: P1)
 
 **En tant que** utilisateur
-**Je veux** choisir minute dans une liste 0–59 (ou "Inconnu")
-**Afin de** ne jamais provoquer d'erreur type "05:40".
+**Je veux** choisir une tranche horaire dans une liste simple
+**Afin de** rester stable et éviter les erreurs de format.
 
-**Why this priority**: Évite les erreurs de format courantes. Garantit la conformité avec le type de données attendu (int 0-59).
+**Why this priority**: Évite les erreurs de format courantes. Garantit la conformité avec un champ catégoriel stable.
 
-**Independent Test**: L'utilisateur peut sélectionner une minute via dropdown uniquement, sans possibilité de saisie libre.
+**Independent Test**: L'utilisateur peut sélectionner une tranche horaire via dropdown uniquement, sans possibilité de saisie libre.
 
 **Acceptance Scenarios**:
 
-1. **Given** l'utilisateur est sur la page "Conditions & minute", **When** il consulte le champ "minute", **Then** il voit un dropdown avec les valeurs 0 à 59 + option "-1 — Non renseigné"
+1. **Given** l'utilisateur est sur la page "Conditions & tranche horaire", **When** il consulte le champ "time_bucket", **Then** il voit un dropdown avec les valeurs `night_00_05`, `morning_06_11`, `afternoon_12_17`, `evening_18_23`
 
-2. **Given** l'utilisateur tente de saisir du texte dans le champ minute, **When** il essaie, **Then** aucune saisie texte libre n'est possible (seulement sélection via dropdown)
+2. **Given** l'utilisateur tente de saisir du texte dans le champ time_bucket, **When** il essaie, **Then** aucune saisie texte libre n'est possible (seulement sélection via dropdown)
 
 ---
 
@@ -284,7 +284,7 @@
 
 ### Functional Requirements
 
-- **FR-001**: L'interface DOIT organiser la saisie des 15 variables en 6 pages thématiques (Contexte & route, Infrastructure, Collision, Conducteur, Conditions & minute, Récap)
+- **FR-001**: L'interface DOIT organiser la saisie des 15 variables en 6 pages thématiques (Contexte & route, Infrastructure, Collision, Conducteur, Conditions & tranche horaire, Récap)
 
 - **FR-002**: L'interface DOIT fournir des boutons de navigation "Précédent" et "Suivant" entre les pages
 
@@ -300,7 +300,7 @@
 
 - **FR-008**: Un message DOIT indiquer clairement les champs manquants avec leur page de localisation
 
-- **FR-009**: Le champ "minute" DOIT être un dropdown 0-59 + option "Non renseigné"
+- **FR-009**: Le champ "time_bucket" DOIT être un dropdown (night_00_05, morning_06_11, afternoon_12_17, evening_18_23)
 
 - **FR-010**: La page 6 "Récap" DOIT afficher un tableau récapitulatif des 15 choix (champ | code | libellé)
 

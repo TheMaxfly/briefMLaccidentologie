@@ -55,7 +55,7 @@ class TestUS03DropdownDisplay:
         required_fields = [
             "dep", "lum", "atm", "catr", "agg", "int", "circ",
             "col", "vma_bucket", "catv_family_4", "manv_mode",
-            "driver_age_bucket", "choc_mode", "driver_trajet_family", "minute"
+            "driver_age_bucket", "choc_mode", "driver_trajet_family", "time_bucket"
         ]
 
         # Act & Assert
@@ -120,31 +120,32 @@ class TestUS03DropdownDisplay:
         has_non_renseigne = any("-1 — " in opt for opt in atm_options)
         assert has_non_renseigne, "atm should have '-1 — Non renseigné' option"
 
-    def test_minute_dropdown_has_61_options_including_non_renseigne(self):
+    def test_time_bucket_dropdown_has_4_options(self):
         """
-        Verify minute dropdown has 61 options (-1, 0-59) all formatted
+        Verify time_bucket dropdown has 4 options all formatted
 
-        Given: Reference data for minute field
+        Given: Reference data for time_bucket field
         When: Getting dropdown options
-        Then: Has 61 formatted options
+        Then: Has 4 formatted options
         """
         # Arrange
         ref_data = reference_loader.load_reference_data()
 
         # Act
-        minute_options = reference_loader.get_dropdown_options(ref_data, "minute")
+        time_bucket_options = reference_loader.get_dropdown_options(ref_data, "time_bucket")
 
         # Assert
-        assert len(minute_options) == 61, "Should have 61 minute options (-1, 0-59)"
+        assert len(time_bucket_options) == 4, "Should have 4 time_bucket options"
 
         # Check specific formats
-        assert any("-1 — " in opt for opt in minute_options), "Should have -1 option"
-        assert any("0 — " in opt for opt in minute_options), "Should have 0 option"
-        assert any("59 — " in opt for opt in minute_options), "Should have 59 option"
+        assert any("night_00_05 — " in opt for opt in time_bucket_options), "Should have 'night_00_05' option"
+        assert any("morning_06_11 — " in opt for opt in time_bucket_options), "Should have 'morning_06_11' option"
+        assert any("afternoon_12_17 — " in opt for opt in time_bucket_options), "Should have 'afternoon_12_17' option"
+        assert any("evening_18_23 — " in opt for opt in time_bucket_options), "Should have 'evening_18_23' option"
 
         # All should be formatted
-        for option in minute_options:
-            assert " — " in option, f"Minute option '{option}' should be formatted"
+        for option in time_bucket_options:
+            assert " — " in option, f"time_bucket option '{option}' should be formatted"
 
     def test_dropdown_selection_parsing_workflow(self):
         """
@@ -188,7 +189,7 @@ class TestUS03DropdownDisplay:
         # Page 4 fields
         page_4_fields = ["driver_age_bucket", "driver_trajet_family", "catv_family_4"]
         # Page 5 fields
-        page_5_fields = ["lum", "atm", "minute"]
+        page_5_fields = ["lum", "atm", "time_bucket"]
 
         all_fields = page_1_fields + page_2_fields + page_3_fields + page_4_fields + page_5_fields
 

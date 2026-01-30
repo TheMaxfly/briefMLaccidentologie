@@ -14,7 +14,7 @@ from typing import Any
 REQUIRED_FIELDS = [
     "dep", "lum", "atm", "catr", "agg", "int", "circ",
     "col", "vma_bucket", "catv_family_4", "manv_mode",
-    "driver_age_bucket", "choc_mode", "driver_trajet_family", "minute"
+    "driver_age_bucket", "choc_mode", "driver_trajet_family", "time_bucket"
 ]
 
 # Field to page mapping (for navigation hints)
@@ -33,7 +33,7 @@ FIELD_TO_PAGE = {
     "catv_family_4": 4,
     "lum": 5,
     "atm": 5,
-    "minute": 5
+    "time_bucket": 5
 }
 
 # Field labels in French (for error messages)
@@ -52,7 +52,7 @@ FIELD_LABELS = {
     "driver_age_bucket": "Classe d'âge conducteur",
     "choc_mode": "Point de choc initial",
     "driver_trajet_family": "Famille de trajet conducteur",
-    "minute": "Minute de l'heure"
+    "time_bucket": "Tranche horaire"
 }
 
 
@@ -119,7 +119,7 @@ def format_missing_fields_message(prediction_inputs: dict[str, Any]) -> str:
         Formatted message string, or empty string if no missing fields
 
     Example:
-        "Champs manquants:\n- Page 1: Département\n- Page 5: Minute de l'heure"
+        "Champs manquants:\n- Page 1: Département\n- Page 5: Tranche horaire"
     """
     missing = get_missing_fields_with_pages(prediction_inputs)
 

@@ -45,7 +45,7 @@ def load_reference_data(json_path: str = "data/ref_options.json") -> dict[str, l
     required_fields = [
         "dep", "lum", "atm", "catr", "agg", "int", "circ", "col",
         "vma_bucket", "catv_family_4", "manv_mode", "driver_age_bucket",
-        "choc_mode", "driver_trajet_family", "minute"
+        "choc_mode", "driver_trajet_family", "time_bucket"
     ]
 
     missing_fields = [field for field in required_fields if field not in data]

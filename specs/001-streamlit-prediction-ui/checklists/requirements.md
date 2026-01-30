@@ -73,7 +73,7 @@
 - Page structure explicitly defined (6 pages with specific field groupings)
 - Multi-page navigation flow clearly specified
 - Dropdown format standardized ("code — libellé")
-- Validation logic detailed (15 required fields, minute dropdown 0-59)
+- Validation logic detailed (15 required fields, time_bucket dropdown)
 - Result display requirements precise (probability, class, threshold 0.47)
 - Centralized reference (JSON) requirement specified
 

@@ -6,7 +6,7 @@
   "required": [
     "dep", "lum", "atm", "catr", "agg", "int", "circ", "col",
     "vma_bucket", "catv_family_4", "manv_mode", "driver_age_bucket",
-    "choc_mode", "driver_trajet_family", "minute"
+    "choc_mode", "driver_trajet_family", "time_bucket"
   ],
   "properties": {
     "dep": {
@@ -26,8 +26,8 @@
     "lum": {
       "type": "array",
       "description": "Conditions d'éclairage (5 values)",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 4,
+      "maxItems": 4,
       "items": {
         "type": "object",
         "required": ["code", "label"],
@@ -96,8 +96,8 @@
     "circ": {
       "type": "array",
       "description": "Régime de circulation (5 values including -1)",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 4,
+      "maxItems": 4,
       "items": {
         "type": "object",
         "required": ["code", "label"],
@@ -221,19 +221,18 @@
         }
       }
     },
-    "minute": {
+    "time_bucket": {
       "type": "array",
-      "description": "Minute (61 values: -1 and 0-59)",
-      "minItems": 61,
-      "maxItems": 61,
+      "description": "Tranche horaire (4 values)",
+      "minItems": 4,
+      "maxItems": 4,
       "items": {
         "type": "object",
         "required": ["code", "label"],
         "properties": {
           "code": {
-            "type": "integer",
-            "minimum": -1,
-            "maximum": 59
+            "type": "string",
+            "enum": ["night_00_05", "morning_06_11", "afternoon_12_17", "evening_18_23"]
           },
           "label": {"type": "string"}
         }

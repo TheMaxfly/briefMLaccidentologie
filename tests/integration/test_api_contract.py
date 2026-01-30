@@ -40,7 +40,7 @@ def valid_payload():
         "driver_age_bucket": "25-34",
         "choc_mode": 1,
         "driver_trajet_family": "trajet_1",
-        "minute": 30
+        "time_bucket": "morning_06_11"
     }
 
 
@@ -186,7 +186,7 @@ def test_predict_endpoint_missing_required_field():
         "driver_age_bucket": "25-34",
         "choc_mode": 1,
         "driver_trajet_family": "trajet_1",
-        "minute": 30
+        "time_bucket": "morning_06_11"
     }
 
     # Make request
@@ -232,7 +232,7 @@ def test_predict_endpoint_all_fields_invalid():
         "driver_age_bucket": "invalid",  # Not in valid buckets
         "choc_mode": 20,  # Out of range -1 to 9
         "driver_trajet_family": "invalid",  # Not in valid families
-        "minute": 100  # Out of range 0-59 or -1
+        "time_bucket": "invalid"  # Not in valid time buckets
     }
 
     # Make request

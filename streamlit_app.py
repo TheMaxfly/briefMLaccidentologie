@@ -75,7 +75,7 @@ with st.sidebar:
             f for f in [
                 "dep", "lum", "atm", "catr", "agg", "int", "circ",
                 "col", "vma_bucket", "catv_family_4", "manv_mode",
-                "driver_age_bucket", "choc_mode", "driver_trajet_family", "minute"
+                "driver_age_bucket", "choc_mode", "driver_trajet_family", "time_bucket"
             ]
             if session_state.get_prediction_input(f) is not None
         ])

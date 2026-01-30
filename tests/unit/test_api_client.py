@@ -31,7 +31,7 @@ SAMPLE_INPUTS = {
     "driver_age_bucket": "25-34",
     "choc_mode": 1,
     "driver_trajet_family": "trajet_1",
-    "minute": 30
+    "time_bucket": "morning_06_11"
 }
 
 

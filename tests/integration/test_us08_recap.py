@@ -42,7 +42,7 @@ class TestUS08RecapTable:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Load reference data
@@ -64,7 +64,7 @@ class TestUS08RecapTable:
         field_names = recap_table["Champ"].tolist()
         assert "Département" in field_names
         assert "Conditions d'éclairage" in field_names
-        assert "Minute de l'heure" in field_names
+        assert "Tranche horaire" in field_names
 
     def test_recap_table_shows_correct_codes_and_labels(self):
         """
@@ -90,7 +90,7 @@ class TestUS08RecapTable:
             "driver_age_bucket": 30,
             "choc_mode": 1,
             "driver_trajet_family": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
         ref_data = reference_loader.load_reference_data()
 
@@ -122,7 +122,7 @@ class TestUS08RecapTable:
             "int": 1, "circ": 1,  # Page 2
             "col": 2, "choc_mode": 1, "manv_mode": 1,  # Page 3
             "driver_age_bucket": 30, "driver_trajet_family": 1, "catv_family_4": 1,  # Page 4
-            "lum": 1, "atm": 1, "minute": 30  # Page 5
+            "lum": 1, "atm": 1, "time_bucket": "morning_06_11"  # Page 5
         }
         ref_data = reference_loader.load_reference_data()
 
@@ -161,7 +161,7 @@ class TestUS08RecapTable:
             "choc_mode": 1,
             "manv_mode": 1,
             "driver_age_bucket": 30
-            # Missing: driver_trajet_family, catv_family_4, lum, atm, minute
+            # Missing: driver_trajet_family, catv_family_4, lum, atm, time_bucket
         }
         ref_data = reference_loader.load_reference_data()
 
@@ -174,7 +174,7 @@ class TestUS08RecapTable:
         # Missing fields should not appear
         field_names = recap_table["Champ"].tolist()
         assert "Conditions d'éclairage" not in field_names, "lum should not appear (missing)"
-        assert "Minute de l'heure" not in field_names, "minute should not appear (missing)"
+        assert "Tranche horaire" not in field_names, "time_bucket should not appear (missing)"
 
     def test_recap_table_includes_page_column_for_navigation(self):
         """
@@ -190,7 +190,7 @@ class TestUS08RecapTable:
             "int": 1, "circ": 1,
             "col": 2, "choc_mode": 1, "manv_mode": 1,
             "driver_age_bucket": 30, "driver_trajet_family": 1, "catv_family_4": 1,
-            "lum": 1, "atm": 1, "minute": 30
+            "lum": 1, "atm": 1, "time_bucket": "morning_06_11"
         }
         ref_data = reference_loader.load_reference_data()
 
@@ -220,7 +220,7 @@ class TestUS08RecapTable:
             "dep": "59", "lum": 1, "atm": 1, "catr": 1, "agg": 1,
             "int": 1, "circ": 1, "col": 2, "vma_bucket": 50,
             "catv_family_4": 1, "manv_mode": 1, "driver_age_bucket": 30,
-            "choc_mode": 1, "driver_trajet_family": 1, "minute": 30
+            "choc_mode": 1, "driver_trajet_family": 1, "time_bucket": "morning_06_11"
         }
         ref_data = reference_loader.load_reference_data()
 
@@ -237,7 +237,7 @@ class TestUS08RecapTable:
         # Should contain French labels
         assert "Département" in field_names, "Should show French label"
         assert "Conditions d'éclairage" in field_names, "Should show French label"
-        assert "Minute de l'heure" in field_names, "Should show French label"
+        assert "Tranche horaire" in field_names, "Should show French label"
 
     def test_recap_table_handles_empty_inputs(self):
         """

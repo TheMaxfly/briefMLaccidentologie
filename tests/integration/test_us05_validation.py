@@ -37,7 +37,7 @@ class TestUS05ValidationIntegration:
             "choc_mode": 1,
             "manv_mode": 1,
             "driver_age_bucket": 30
-            # Missing: driver_trajet_family, catv_family_4, lum, atm, minute
+            # Missing: driver_trajet_family, catv_family_4, lum, atm, time_bucket
         }
 
         # Act
@@ -49,7 +49,7 @@ class TestUS05ValidationIntegration:
         assert len(missing_fields) == 5, "Should have 5 missing fields"
         assert "lum" in missing_fields
         assert "atm" in missing_fields
-        assert "minute" in missing_fields
+        assert "time_bucket" in missing_fields
         assert "driver_trajet_family" in missing_fields
         assert "catv_family_4" in missing_fields
 
@@ -77,7 +77,7 @@ class TestUS05ValidationIntegration:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Act
@@ -108,7 +108,7 @@ class TestUS05ValidationIntegration:
             "driver_trajet_family": 1,
             "catv_family_4": 1,
             "atm": 1
-            # Missing: dep (page 1), col + manv_mode (page 3), lum + minute (page 5)
+            # Missing: dep (page 1), col + manv_mode (page 3), lum + time_bucket (page 5)
         }
 
         # Act
@@ -119,7 +119,7 @@ class TestUS05ValidationIntegration:
         assert "Champs manquants:" in message
         assert "Page 1:" in message  # dep is on page 1
         assert "Page 3:" in message  # col, manv_mode on page 3
-        assert "Page 5:" in message  # lum, minute on page 5
+        assert "Page 5:" in message  # lum, time_bucket on page 5
 
         # Verify page mapping is correct
         pages = {item[1]: item[0] for item in missing_with_pages}
@@ -127,7 +127,7 @@ class TestUS05ValidationIntegration:
         assert pages["col"] == 3
         assert pages["manv_mode"] == 3
         assert pages["lum"] == 5
-        assert pages["minute"] == 5
+        assert pages["time_bucket"] == 5
 
     def test_form_completion_tracks_progress(self):
         """
@@ -158,13 +158,13 @@ class TestUS05ValidationIntegration:
             "manv_mode": 1, "driver_age_bucket": 30,
             "driver_trajet_family": 1, "catv_family_4": 1,
             "lum": 1, "atm": 1
-            # Missing only minute
+            # Missing only time_bucket
         }
         percentage_4 = validation.get_completion_percentage(stage_4)
         assert percentage_4 == pytest.approx(93.33, abs=0.1)
 
         # Stage 5: 100% (all 15 fields)
-        stage_5 = {**stage_4, "minute": 30}
+        stage_5 = {**stage_4, "time_bucket": "morning_06_11"}
         percentage_5 = validation.get_completion_percentage(stage_5)
         assert percentage_5 == 100.0
 
@@ -190,7 +190,7 @@ class TestUS05ValidationIntegration:
             "driver_trajet_family": 1,
             "catv_family_4": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Act

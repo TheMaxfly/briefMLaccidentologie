@@ -39,7 +39,7 @@ class TestUS07Prediction:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Mock successful API response
@@ -88,7 +88,7 @@ class TestUS07Prediction:
             "catv_family_4": 2,
             "lum": 3,
             "atm": 7,
-            "minute": 45
+            "time_bucket": "evening_18_23"
         }
 
         # Mock API response with high probability
@@ -132,7 +132,7 @@ class TestUS07Prediction:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Mock API response with low probability
@@ -176,7 +176,7 @@ class TestUS07Prediction:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Mock API response with probability exactly at threshold

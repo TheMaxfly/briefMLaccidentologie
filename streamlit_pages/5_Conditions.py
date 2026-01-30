@@ -1,7 +1,7 @@
 """
 Page 5: Conditions
 
-Fields: lum, atm, minute
+Fields: lum, atm, time_bucket
 """
 
 import streamlit as st
@@ -13,7 +13,7 @@ def render():
     session_state.set_current_page(5)
 
     st.header("Page 5 : Conditions")
-    st.caption("Conditions d'eclairage, meteorologiques et heure")
+    st.caption("Conditions d'eclairage, meteorologiques et tranche horaire")
 
     ref_data = session_state.get_reference_data()
 
@@ -65,28 +65,33 @@ def render():
 
     st.divider()
 
-    # Field: Minute (minute)
-    st.subheader("Minute de l'heure")
-    minute_options = reference_loader.get_dropdown_options(ref_data, "minute")
-    current_minute = session_state.get_prediction_input("minute")
+    # Field: Tranche horaire (time_bucket)
+    st.subheader("Tranche horaire")
+    time_bucket_options = reference_loader.get_dropdown_options(ref_data, "time_bucket")
+    current_time_bucket = session_state.get_prediction_input("time_bucket")
 
-    minute_index = 0
-    if current_minute is not None:
-        formatted_current = reference_loader.format_dropdown_option(current_minute,
-            reference_loader.get_label_for_code(ref_data, "minute", current_minute))
-        if formatted_current in minute_options:
-            minute_index = minute_options.index(formatted_current)
+    time_bucket_index = 0
+    if current_time_bucket is not None:
+        formatted_current = reference_loader.format_dropdown_option(current_time_bucket,
+            reference_loader.get_label_for_code(ref_data, "time_bucket", current_time_bucket))
+        if formatted_current in time_bucket_options:
+            time_bucket_index = time_bucket_options.index(formatted_current)
 
-    minute_selected = st.selectbox("Minute (0-59)", options=minute_options, index=minute_index, key="minute_input",
-                                    help="Minute de l'heure de l'accident")
-    if minute_selected:
-        minute_code = reference_loader.parse_dropdown_value(minute_selected)
-        session_state.set_prediction_input("minute", minute_code)
+    time_bucket_selected = st.selectbox(
+        "Plage horaire",
+        options=time_bucket_options,
+        index=time_bucket_index,
+        key="time_bucket_input",
+        help="Tranche horaire de l'accident"
+    )
+    if time_bucket_selected:
+        time_bucket_code = reference_loader.parse_dropdown_value(time_bucket_selected)
+        session_state.set_prediction_input("time_bucket", time_bucket_code)
 
-    minute_help = reference_loader.get_field_help(ref_data, "minute")
-    if minute_help:
-        with st.expander("ℹ️ Aide : Minute de l'heure"):
-            st.write(minute_help["definition"])
+    time_bucket_help = reference_loader.get_field_help(ref_data, "time_bucket")
+    if time_bucket_help:
+        with st.expander("ℹ️ Aide : Tranche horaire"):
+            st.write(time_bucket_help["definition"])
 
     st.divider()
 

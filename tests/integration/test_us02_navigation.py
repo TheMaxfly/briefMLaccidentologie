@@ -51,7 +51,7 @@ class TestUS02Navigation:
             2: {"int": 1, "circ": 2},
             3: {"col": 3, "choc_mode": 1, "manv_mode": 1},
             4: {"driver_age_bucket": "25-34", "driver_trajet_family": "trajet_1", "catv_family_4": "voitures_utilitaires"},
-            5: {"lum": 1, "atm": 1, "minute": 30}
+            5: {"lum": 1, "atm": 1, "time_bucket": "morning_06_11"}
         }
 
         with patch('streamlit.session_state', mock_state):
@@ -93,7 +93,7 @@ class TestUS02Navigation:
             # Check Page 5 fields
             assert all_inputs.get("lum") == 1, "lum should be preserved"
             assert all_inputs.get("atm") == 1, "atm should be preserved"
-            assert all_inputs.get("minute") == 30, "minute should be preserved"
+            assert all_inputs.get("time_bucket") == "morning_06_11", "time_bucket should be preserved"
 
             # Verify we're on page 6
             assert mock_state.current_page == 6, "Should be on page 6 after navigation"
@@ -211,7 +211,7 @@ class TestUS02Navigation:
         required_fields = [
             "dep", "lum", "atm", "catr", "agg", "int", "circ", "col",
             "vma_bucket", "catv_family_4", "manv_mode", "driver_age_bucket",
-            "choc_mode", "driver_trajet_family", "minute"
+            "choc_mode", "driver_trajet_family", "time_bucket"
         ]
 
         for field in required_fields:
@@ -224,9 +224,9 @@ class TestUS02Navigation:
                 assert "code" in opt, f"Field '{field}' option missing 'code'"
                 assert "label" in opt, f"Field '{field}' option missing 'label'"
 
-        # Minute field should have 61 options (0-59 + "Non renseigné")
-        assert len(ref_data["minute"]) == 61, \
-            "minute field should have 61 dropdown options (not a text input)"
+        # time_bucket field should have 4 options
+        assert len(ref_data["time_bucket"]) == 4, \
+            "time_bucket field should have 4 dropdown options"
 
     def test_backward_forward_navigation_preserves_data(self, setup_session_state):
         """

@@ -60,7 +60,11 @@ Ce schéma décrit le format **attendu par le modèle** pour prédire la cible `
         "gps_valid": { "type": ["integer","null"], "enum": [0,1], "description": "1 si GPS validé après nettoyage." },
 
         "hour":   { "type": ["integer","null"], "minimum": 0, "maximum": 23 },
-        "minute": { "type": ["integer","null"], "minimum": 0, "maximum": 59 },
+        "time_bucket": {
+          "type": ["string","null"],
+          "enum": ["night_00_05", "morning_06_11", "afternoon_12_17", "evening_18_23"],
+          "description": "Tranche horaire (00–05 night_00_05, 06–11 morning_06_11, 12–17 afternoon_12_17, 18–23 evening_18_23)."
+        },
         "date":   { "type": ["string","null"], "format": "date-time", "description": "Timestamp reconstruit." },
 
         "n_lieux_rows": { "type": ["integer","null"], "minimum": 1, "description": "Nb de lignes LIEUX agrégées." },
@@ -131,7 +135,7 @@ Ce schéma décrit le format **attendu par le modèle** pour prédire la cible `
 
         "dow": { "type": ["integer","null"], "minimum": 0, "maximum": 6 },
         "is_weekend": { "type": ["integer","null"], "enum": [0,1] },
-        "time_bucket": { "type": ["string","null"], "enum": ["nuit","matin","journee","soir","nuit_tard"] },
+        "time_bucket": { "type": ["string","null"], "enum": ["night_00_05","morning_06_11","afternoon_12_17","evening_18_23"] },
         "is_rush_hour": { "type": ["integer","null"], "enum": [0,1] },
         "season": { "type": ["string","null"], "enum": ["hiver","printemps","ete","automne"] },
 

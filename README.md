@@ -3,14 +3,24 @@
 - Granularité : 1 ligne = 1 accident (clé `Num_Acc`)
 - Période : 2022–2024
 - Cible : `grave` (binaire)
+- ✅ Mise à jour : la feature `minute` est remplacée par `time_bucket` (4 catégories). Le modèle actif est `catboost_product15_v2_time_bucket_final.cbm`.
 
 ## Demo (API REST + Interface web)
+
+### Lancement rapide (1 seule commande)
+
+Pour lancer l'API **et** l'interface web en une seule commande :
+```bash
+uv run python start.py
+```
+
+L'API est accessible sur `http://localhost:8000` et Streamlit sur `http://localhost:8501`.
 
 ### 1) Lancer l'API (FastAPI)
 
 Le fichier `predictor.py` charge par défaut :
-- modele: `model/catboost_product15.cbm`
-- meta: `out/catboost_product15_meta.json`
+- modele: `model/catboost_product15_v2_time_bucket_final.cbm`
+- meta: `out/catboost_product15_v2_time_bucket_final_meta.json`
 
 Commande :
 ```bash
@@ -59,7 +69,6 @@ export CODEX_HOME=/home/maxime/alternance/BriefML/.codex
 | `long` | float64 | BAAC Caractéristiques | Longitude (WGS84) si disponible. | float/NA |
 | `gps_valid` | int64 | Feature (qualité) | 1 si coordonnées GPS jugées valides après nettoyage/correctifs, sinon 0. | 0/1 |
 | `hour` | int64 | Feature (temps) | Heure extraite de hrmn/date (0–23). | 0–23 |
-| `minute` | int64 | Feature (temps) | Minute extraite de hrmn/date (0–59). | 0–59 |
 | `date` | object | Feature (temps) | Timestamp reconstruit à partir de jour/mois/an + hrmn. | datetime |
 | `n_lieux_rows` | int64 | Feature (jointure) | Nombre de lignes LIEUX associées à Num_Acc (contrôle de jointure). | >=1 |
 | `catr` | float64 | BAAC Lieux | Catégorie de route. | 1–9 |
@@ -93,7 +102,7 @@ export CODEX_HOME=/home/maxime/alternance/BriefML/.codex
 | `obs_family_mode_nonzero` | object | Feature (catégorielle) | Famille de obs_mode_nonzero (même mapping que obs_family_mode). | voir obs_family_mode |
 | `dow` | int64 | Feature (temps) | Jour de semaine (0=Lundi … 6=Dimanche, convention pandas). | 0–6 |
 | `is_weekend` | int64 | Feature (temps) | 1 si samedi/dimanche, sinon 0. | 0/1 |
-| `time_bucket` | object | Feature (temps) | Tranche horaire (bucket) dérivée de l’heure. | {matin, journee, soir, nuit, nuit_tard} |
+| `time_bucket` | object | Feature (temps) | Tranche horaire (bucket) dérivée de l’heure. | {night_00_05, morning_06_11, afternoon_12_17, evening_18_23} |
 | `is_rush_hour` | int64 | Feature (temps) | 1 si heure de pointe (selon règle notebook), sinon 0. | 0/1 |
 | `season` | object | Feature (temps) | Saison dérivée du mois. | {hiver, printemps, ete, automne} |
 | `hour_sin` | float64 | Feature (cyclique) | Encodage sinusoïdal de l’heure (cycle 24h). | float |
@@ -157,12 +166,11 @@ export CODEX_HOME=/home/maxime/alternance/BriefML/.codex
 ### 3.1 Temps
 - `dow` : jour de semaine (0=Lundi … 6=Dimanche).
 - `is_weekend` : 1 si `dow` ∈ {5,6}.
-- `time_bucket` (selon tes données) :
-  - `nuit` : 00–05
-  - `matin` : 06–09
-  - `journee` : 10–16
-  - `soir` : 17–20
-  - `nuit_tard` : 21–23
+- `time_bucket` :
+  - `night_00_05` : 00–05
+  - `morning_06_11` : 06–11
+  - `afternoon_12_17` : 12–17
+  - `evening_18_23` : 18–23
 - `is_rush_hour` : 1 si heure ∈ {7,8,9,16,17,18,19}.
 - `season` :
   - hiver = {12,1,2}

@@ -44,7 +44,7 @@ Accept: application/json
   "driver_age_bucket": "string",      // Classe d'âge ("<18", "18-24", ..., "unknown")
   "choc_mode": integer,      // Point de choc (-1 or 0-9)
   "driver_trajet_family": "string",   // Famille de trajet ("trajet_1", ..., "unknown")
-  "minute": integer          // Minute (0-59 or -1)
+  "time_bucket": "string"    // Tranche horaire ("night_00_05", "morning_06_11", "afternoon_12_17", "evening_18_23")
 }
 ```
 
@@ -66,7 +66,7 @@ Accept: application/json
   "driver_age_bucket": "25-34",
   "choc_mode": 1,
   "driver_trajet_family": "trajet_1",
-  "minute": 30
+  "time_bucket": "morning_06_11"
 }
 ```
 
@@ -129,7 +129,7 @@ Accept: application/json
       "type": "value_error.const"
     },
     {
-      "loc": ["body", "minute"],
+      "loc": ["body", "time_bucket"],
       "msg": "ensure this value is less than or equal to 59",
       "type": "value_error.number.not_le"
     }
@@ -143,7 +143,7 @@ Accept: application/json
 |-------|-------|---------|
 | `lum` | Invalid code | "value must be one of [1, 2, 3, 4, 5]" |
 | `dep` | Unknown department | "value is not a valid department code" |
-| `minute` | Out of range | "ensure this value is less than or equal to 59" |
+| `time_bucket` | Invalid value | "value is not a valid enumeration member" |
 | `vma_bucket` | Invalid bucket | "value must be one of ['<=30', '31-50', ...]" |
 | (any) | Missing field | "field required" |
 
@@ -197,7 +197,7 @@ Accept: application/json
 | `col` | `[-1, 1, 2, 3, 4, 5, 6, 7]` | Type de collision |
 | `manv_mode` | `[-1, 0, 1, 2, ..., 26]` | Manœuvre (mode) |
 | `choc_mode` | `[-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]` | Point de choc (mode) |
-| `minute` | `[0-59]` or `-1` | Minute de l'heure |
+| `time_bucket` | `night_00_05`, `morning_06_11`, `afternoon_12_17`, `evening_18_23` | Tranche horaire |
 
 ## Environment Configuration
 
@@ -299,7 +299,7 @@ def test_predict_endpoint_success():
         "driver_age_bucket": "25-34",
         "choc_mode": 1,
         "driver_trajet_family": "trajet_1",
-        "minute": 30
+        "time_bucket": "morning_06_11"
     }
 
     response = requests.post(f"{API_URL}/predict", json=payload)

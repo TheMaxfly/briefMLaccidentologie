@@ -1,5 +1,5 @@
 """
-predictor.py — API FastAPI pour prédire la gravité d’un accident (CatBoost product15)
+predictor.py — API FastAPI pour prédire la gravité d’un accident (CatBoost product15_v2_time_bucket)
 
 - Charge un modèle CatBoost (.cbm) et un meta.json (features, cat_features, threshold)
 - Valide / normalise les 15 champs utilisateur
@@ -9,8 +9,8 @@ Lancement :
   uvicorn predictor:app --host 0.0.0.0 --port 8000 --reload
 
 Variables d'environnement (optionnelles) :
-  MODEL_PATH=/home/maxime/alternance/BriefML/out/catboost_product15.cbm
-  META_PATH=/home/maxime/alternance/BriefML/out/catboost_product15_meta.json
+  MODEL_PATH=/home/maxime/alternance/BriefML/model/catboost_product15_v2_time_bucket_final.cbm
+  META_PATH=/home/maxime/alternance/BriefML/out/catboost_product15_v2_time_bucket_final_meta.json
   MISSING_CAT=__MISSING__
 """
 
@@ -38,8 +38,8 @@ BASE_DIR = Path(__file__).resolve().parent
 # Default project layout:
 # - model/ contains the CatBoost .cbm
 # - out/ contains the meta.json (features, cat_features, threshold)
-DEFAULT_MODEL_PATH = str(BASE_DIR / "model" / "catboost_product15.cbm")
-DEFAULT_META_PATH = str(BASE_DIR / "out" / "catboost_product15_meta.json")
+DEFAULT_MODEL_PATH = str(BASE_DIR / "model" / "catboost_product15_v2_time_bucket_final.cbm")
+DEFAULT_META_PATH = str(BASE_DIR / "out" / "catboost_product15_v2_time_bucket_final_meta.json")
 MISSING_CAT = os.getenv("MISSING_CAT", "__MISSING__")
 
 
@@ -63,7 +63,7 @@ class ModelMeta:
                 raise ValueError(f"Champ manquant dans meta.json: {k}")
 
         return ModelMeta(
-            model_name=str(obj.get("model_name", "catboost_product15")),
+            model_name=str(obj.get("model_name", "catboost_product15_v2_time_bucket_final")),
             threshold=float(obj["threshold"]),
             features=list(obj["features"]),
             cat_features=list(obj["cat_features"]),
@@ -92,7 +92,7 @@ def load_model_and_meta() -> Tuple[CatBoostClassifier, ModelMeta]:
 DEFAULTS: Dict[str, Any] = {}
 
 # Champs à forcer en numérique
-NUMERIC_FIELDS = {"minute"}
+NUMERIC_FIELDS: set[str] = set()
 
 
 def normalize_input(payload: Dict[str, Any], meta: ModelMeta) -> pd.DataFrame:
@@ -133,7 +133,7 @@ def normalize_input(payload: Dict[str, Any], meta: ModelMeta) -> pd.DataFrame:
                         "error": "Format invalide",
                         "field": c,
                         "value": v,
-                        "hint": "minute doit être un entier 0-59 (ex: '05:40' -> minute=40).",
+                        "hint": "Le champ doit être un nombre (format HH:MM non accepté).",
                     },
                 )
             try:
@@ -145,7 +145,7 @@ def normalize_input(payload: Dict[str, Any], meta: ModelMeta) -> pd.DataFrame:
                         "error": "Valeur numérique invalide",
                         "field": c,
                         "value": payload.get(c),
-                        "hint": "minute doit être un nombre (0-59).",
+                        "hint": "Le champ doit être numérique.",
                     },
                 )
 
@@ -156,7 +156,7 @@ def normalize_input(payload: Dict[str, Any], meta: ModelMeta) -> pd.DataFrame:
 # FastAPI
 # -----------------------------
 
-app = FastAPI(title="Accidents — CatBoost product15", version="1.0.0")
+app = FastAPI(title="Accidents — CatBoost product15_v2_time_bucket", version="1.0.0")
 
 MODEL: Optional[CatBoostClassifier] = None
 META: Optional[ModelMeta] = None

@@ -104,7 +104,7 @@ streamlit_pages/         # Multi-page Streamlit application
 ├── 2_Infrastructure.py  # Page 2: int, circ
 ├── 3_Collision.py       # Page 3: col, choc_mode, manv_mode
 ├── 4_Conducteur.py      # Page 4: driver_age_bucket, driver_trajet_family
-├── 5_Conditions.py      # Page 5: lum, atm, minute
+├── 5_Conditions.py      # Page 5: lum, atm, time_bucket
 └── 6_Recap_Prediction.py # Page 6: summary table + predict button
 
 streamlit_lib/           # Shared utilities for Streamlit app
@@ -211,8 +211,8 @@ See [data-model.md](data-model.md) for complete entity definitions.
 
 1. **PredictionInput** (Pydantic model):
    - 15 fields matching `data_dictionary_catboost_product15.md`
-   - Field types: str (dep, vma_bucket, catv_family_4, driver_age_bucket, driver_trajet_family), int (lum, atm, catr, agg, int, circ, col, manv_mode, choc_mode, minute)
-   - Validation: Enum constraints for coded fields, range (0-59) for minute
+   - Field types: str (dep, vma_bucket, catv_family_4, driver_age_bucket, driver_trajet_family, time_bucket), int (lum, atm, catr, agg, int, circ, col, manv_mode, choc_mode)
+   - Validation: Enum constraints for coded fields, enum for time_bucket
 
 2. **PredictionResult** (Pydantic model):
    - probability: float (0.0-1.0)
@@ -254,7 +254,7 @@ See [contracts/](contracts/) for OpenAPI schema and detailed contracts.
   "driver_age_bucket": "25-34",
   "choc_mode": 1,
   "driver_trajet_family": "trajet_1",
-  "minute": 30
+  "time_bucket": "morning_06_11"
 }
 ```
 

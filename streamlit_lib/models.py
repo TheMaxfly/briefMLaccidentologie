@@ -5,7 +5,7 @@ This module defines Pydantic models for:
 - PredictionInput: 15 input variables for accident severity prediction
 - PredictionResult: Prediction output from the FastAPI backend
 
-Based on data_dictionary_catboost_product15.md
+Based on data_dictionary_catboost_product15_v2.md
 """
 
 from typing import Any, Literal
@@ -33,7 +33,10 @@ class PredictionInput(BaseModel):
     driver_age_bucket: str = Field(..., description="Classe d'âge conducteur")
     choc_mode: int = Field(..., ge=-1, le=9, description="Point de choc initial (-1 ou 0-9)")
     driver_trajet_family: str = Field(..., description="Famille de trajet conducteur")
-    minute: int = Field(..., ge=-1, le=59, description="Minute de l'heure (-1 ou 0-59)")
+    time_bucket: str = Field(
+        ...,
+        description="Tranche horaire (night_00_05, morning_06_11, afternoon_12_17, evening_18_23)"
+    )
 
     @field_validator('dep')
     @classmethod
@@ -112,6 +115,20 @@ class PredictionInput(BaseModel):
             raise ValueError(f"driver_trajet_family must be one of {valid_families}")
         return v
 
+    @field_validator('time_bucket')
+    @classmethod
+    def validate_time_bucket(cls, v: str) -> str:
+        """Validate time bucket."""
+        valid_buckets = [
+            "night_00_05",
+            "morning_06_11",
+            "afternoon_12_17",
+            "evening_18_23",
+        ]
+        if v not in valid_buckets:
+            raise ValueError(f"time_bucket must be one of {valid_buckets}")
+        return v
+
     class Config:
         """Pydantic model configuration."""
         json_schema_extra = {
@@ -130,7 +147,7 @@ class PredictionInput(BaseModel):
                 "driver_age_bucket": "25-34",
                 "choc_mode": 1,
                 "driver_trajet_family": "trajet_1",
-                "minute": 30
+                "time_bucket": "morning_06_11"
             }
         }
 

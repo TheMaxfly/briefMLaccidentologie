@@ -23,7 +23,7 @@ SAMPLE_INPUTS = {
     "int": 1, "circ": 2, "col": 1, "vma_bucket": "51-80",
     "catv_family_4": "voitures_utilitaires", "manv_mode": 1,
     "driver_age_bucket": "25-34", "choc_mode": 1,
-    "driver_trajet_family": "trajet_1", "minute": 30
+    "driver_trajet_family": "trajet_1", "time_bucket": "morning_06_11"
 }
 
 

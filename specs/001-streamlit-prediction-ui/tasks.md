@@ -104,7 +104,7 @@
 - [ ] T025 [P] [US2] Create streamlit_pages/2_Infrastructure.py with dropdowns for int, circ + Précédent/Suivant buttons
 - [ ] T026 [P] [US2] Create streamlit_pages/3_Collision.py with dropdowns for col, choc_mode, manv_mode + Précédent/Suivant buttons
 - [ ] T027 [P] [US2] Create streamlit_pages/4_Conducteur.py with dropdowns for driver_age_bucket, driver_trajet_family + Précédent/Suivant buttons
-- [ ] T028 [P] [US2] Create streamlit_pages/5_Conditions.py with dropdowns for lum, atm, minute + Précédent/Suivant buttons
+- [ ] T028 [P] [US2] Create streamlit_pages/5_Conditions.py with dropdowns for lum, atm, time_bucket + Précédent/Suivant buttons
 - [ ] T029 [US2] Create streamlit_pages/6_Recap_Prediction.py with summary table placeholder + disabled "Prédire" button
 - [ ] T030 [US2] Implement navigation logic in each page: Précédent decrements current_page, Suivant increments current_page
 - [ ] T031 [US2] Implement session state preservation: each page saves selections to st.session_state.prediction_inputs
@@ -156,7 +156,7 @@
 ### Implementation for US-04
 
 - [ ] T043 [P] [US4] Verify data/ref_options.json includes "-1 — Non renseigné" for atm, circ, col fields per data dictionary
-- [ ] T044 [P] [US4] Verify minute dropdown includes "-1 — Non renseigné" option in streamlit_pages/5_Conditions.py
+- [ ] T044 [P] [US4] Verify time_bucket dropdown includes 4 options (night_00_05, morning_06_11, afternoon_12_17, evening_18_23) in streamlit_pages/5_Conditions.py
 - [ ] T045 [US4] Verify tests pass: run pytest tests/integration/test_us04_not_specified.py
 
 **Checkpoint**: US-04 complete - user can select "Non renseigné" where applicable
@@ -167,7 +167,7 @@
 
 **Goal**: "Prédire" button is disabled until all 15 fields are filled, clear message shows missing fields
 
-**Independent Test**: User with 14/15 fields filled sees disabled button + message "Page 5: minute non renseigné"
+**Independent Test**: User with 14/15 fields filled sees disabled button + message "Page 5: time_bucket non renseigné"
 
 **Priority**: P1 (Data quality gate - critical for constitution compliance)
 
@@ -189,25 +189,25 @@
 
 ---
 
-## Phase 8: EPIC 2 - User Story 6 (US-06) - Validation minute dropdown (Priority: P1)
+## Phase 8: EPIC 2 - User Story 6 (US-06) - Validation time_bucket dropdown (Priority: P1)
 
-**Goal**: Minute field is dropdown 0-59 (+ "Non renseigné"), no text input possible
+**Goal**: time_bucket field is dropdown (night_00_05, morning_06_11, afternoon_12_17, evening_18_23), no text input possible
 
-**Independent Test**: User cannot type text in minute field, can only select from dropdown
+**Independent Test**: User cannot type text in time_bucket field, can only select from dropdown
 
 **Priority**: P1 (Prevents common data quality errors)
 
 ### Tests for US-06 (TDD)
 
-- [ ] T054 [P] [US6] Write integration test in tests/integration/test_us06_minute_dropdown.py for minute field is selectbox, not text_input
+- [ ] T054 [P] [US6] Write integration test in tests/integration/test_us06_minute_dropdown.py for time_bucket field is selectbox, not text_input
 
 ### Implementation for US-06
 
-- [ ] T055 [US6] Verify streamlit_pages/5_Conditions.py minute field uses st.selectbox (not st.number_input or st.text_input)
-- [ ] T056 [US6] Verify data/ref_options.json includes 61 minute options: -1, 0-59 with labels
+- [ ] T055 [US6] Verify streamlit_pages/5_Conditions.py time_bucket field uses st.selectbox (not st.text_input)
+- [ ] T056 [US6] Verify data/ref_options.json includes 5 time_bucket options: night_00_05, morning_06_11, afternoon_12_17, evening_18_23
 - [ ] T057 [US6] Verify tests pass: run pytest tests/integration/test_us06_minute_dropdown.py
 
-**Checkpoint**: US-06 complete - minute validation prevents format errors
+**Checkpoint**: US-06 complete - time_bucket validation prevents format errors
 
 ---
 

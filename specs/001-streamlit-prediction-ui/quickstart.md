@@ -93,7 +93,7 @@ BriefML/
 │   ├── 2_Infrastructure.py        # Page 2: int, circ
 │   ├── 3_Collision.py             # Page 3: col, choc_mode, manv_mode
 │   ├── 4_Conducteur.py            # Page 4: driver_age_bucket, driver_trajet_family
-│   ├── 5_Conditions.py            # Page 5: lum, atm, minute
+│   ├── 5_Conditions.py            # Page 5: lum, atm, time_bucket
 │   └── 6_Recap_Prediction.py      # Page 6: summary + predict button
 ├── streamlit_lib/                  # Shared utilities
 │   ├── reference_loader.py        # Load ref_options.json
@@ -210,7 +210,7 @@ curl -X POST http://localhost:8000/predict \
     "driver_age_bucket": "25-34",
     "choc_mode": 1,
     "driver_trajet_family": "trajet_1",
-    "minute": 30
+    "time_bucket": "morning_06_11"
   }'
 ```
 

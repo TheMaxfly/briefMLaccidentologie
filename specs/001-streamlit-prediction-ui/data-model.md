@@ -34,7 +34,7 @@ This document defines the data entities used in the Streamlit interface for acci
 | `driver_age_bucket` | `str` | Must be in ["<18", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+", "unknown"] | Classe d'âge conducteur |
 | `choc_mode` | `int` | Must be in [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9] | Point de choc initial (mode) |
 | `driver_trajet_family` | `str` | Must be in ["trajet_1", "trajet_2", "trajet_3", "trajet_4", "trajet_5", "trajet_9", "unknown"] | Famille de trajet conducteur |
-| `minute` | `int` | Must be in range [0, 59] or -1 | Minute de l'heure |
+| `time_bucket` | `str` | Must be in ["night_00_05", "morning_06_11", "afternoon_12_17", "evening_18_23"] | Tranche horaire |
 
 **Example**:
 ```python
@@ -53,7 +53,7 @@ This document defines the data entities used in the Streamlit interface for acci
     "driver_age_bucket": "25-34",
     "choc_mode": 1,
     "driver_trajet_family": "trajet_1",
-    "minute": 30
+    "time_bucket": "morning_06_11"
 }
 ```
 
@@ -200,7 +200,7 @@ st.session_state = {
 def is_form_complete(prediction_inputs):
     required_fields = ["dep", "lum", "atm", "catr", "agg", "int", "circ",
                        "col", "vma_bucket", "catv_family_4", "manv_mode",
-                       "driver_age_bucket", "choc_mode", "driver_trajet_family", "minute"]
+                       "driver_age_bucket", "choc_mode", "driver_trajet_family", "time_bucket"]
     return all(field in prediction_inputs and prediction_inputs[field] is not None
                for field in required_fields)
 ```
@@ -273,7 +273,7 @@ def is_form_complete(prediction_inputs):
 ```python
 validation_errors = {
     "lum": "Valeur invalide. Choisissez parmi: 1-5",
-    "minute": "Minute doit être entre 0 et 59"
+    "time_bucket": "Tranche horaire invalide (attendu: night_00_05, morning_06_11, afternoon_12_17, evening_18_23)"
 }
 ```
 

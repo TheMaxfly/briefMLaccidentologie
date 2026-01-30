@@ -22,7 +22,7 @@ class TestUS05Validation:
         When: is_form_complete() is called
         Then: Returns False (form is not complete)
         """
-        # Arrange: Complete form minus one field (minute)
+        # Arrange: Complete form minus one field (time_bucket)
         inputs_14_fields = {
             "dep": "59",
             "agg": 1,
@@ -38,7 +38,7 @@ class TestUS05Validation:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1
-            # minute is missing (14/15)
+            # time_bucket is missing (14/15)
         }
 
         # Act
@@ -72,7 +72,7 @@ class TestUS05Validation:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Act
@@ -107,7 +107,7 @@ class TestUS05Validation:
         When: is_form_complete() is called
         Then: Returns False
         """
-        # Arrange: All fields present, but minute is None
+        # Arrange: All fields present, but time_bucket is None
         inputs_with_none = {
             "dep": "59",
             "agg": 1,
@@ -123,7 +123,7 @@ class TestUS05Validation:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": None  # None value
+            "time_bucket": None  # None value
         }
 
         # Act
@@ -140,7 +140,7 @@ class TestUS05Validation:
         When: get_missing_fields() is called
         Then: Returns list with 3 missing field names
         """
-        # Arrange: Missing minute, lum, atm
+        # Arrange: Missing time_bucket, lum, atm
         inputs_12_fields = {
             "dep": "59",
             "agg": 1,
@@ -163,7 +163,7 @@ class TestUS05Validation:
         assert len(missing) == 3, "Should have 3 missing fields"
         assert "lum" in missing, "lum should be missing"
         assert "atm" in missing, "atm should be missing"
-        assert "minute" in missing, "minute should be missing"
+        assert "time_bucket" in missing, "time_bucket should be missing"
 
     def test_get_missing_fields_with_pages_returns_sorted_list(self):
         """
@@ -187,7 +187,7 @@ class TestUS05Validation:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1
-            # Missing: dep (page 1), col (page 3), minute (page 5)
+            # Missing: dep (page 1), col (page 3), time_bucket (page 5)
         }
 
         # Act
@@ -206,7 +206,7 @@ class TestUS05Validation:
         # Check specific missing fields
         assert "dep" in fields, "dep should be in missing fields"
         assert "col" in fields, "col should be in missing fields"
-        assert "minute" in fields, "minute should be in missing fields"
+        assert "time_bucket" in fields, "time_bucket should be in missing fields"
 
     def test_format_missing_fields_message_returns_formatted_string(self):
         """
@@ -230,7 +230,7 @@ class TestUS05Validation:
             "driver_trajet_family": 1,
             "catv_family_4": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Act
@@ -267,7 +267,7 @@ class TestUS05Validation:
             "catv_family_4": 1,
             "lum": 1,
             "atm": 1,
-            "minute": 30
+            "time_bucket": "morning_06_11"
         }
 
         # Act
@@ -308,7 +308,7 @@ class TestUS05Validation:
             "int": 1, "circ": 1, "col": 2, "choc_mode": 1,
             "manv_mode": 1, "driver_age_bucket": 30,
             "driver_trajet_family": 1, "catv_family_4": 1,
-            "lum": 1, "atm": 1, "minute": 30
+            "lum": 1, "atm": 1, "time_bucket": "morning_06_11"
         }
         assert validation.get_completion_percentage(complete) == 100.0
 
@@ -322,7 +322,7 @@ class TestUS05Validation:
         """
         assert validation.get_field_label("dep") == "Département"
         assert validation.get_field_label("lum") == "Conditions d'éclairage"
-        assert validation.get_field_label("minute") == "Minute de l'heure"
+        assert validation.get_field_label("time_bucket") == "Tranche horaire"
 
     def test_get_field_page_returns_correct_page_numbers(self):
         """
@@ -343,7 +343,7 @@ class TestUS05Validation:
         # Page 5 fields
         assert validation.get_field_page("lum") == 5
         assert validation.get_field_page("atm") == 5
-        assert validation.get_field_page("minute") == 5
+        assert validation.get_field_page("time_bucket") == 5
 
         # Unknown field
         assert validation.get_field_page("unknown_field") == 0

@@ -1,0 +1,2 @@
+error: Failed to initialize cache at `/home/maxime/.cache/uv`
+  Caused by: failed to open file `/home/maxime/.cache/uv/sdists-v9/.git`: Permission denied (os error 13)

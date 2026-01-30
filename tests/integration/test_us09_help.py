@@ -48,8 +48,8 @@ class TestUS09HelpIntegration:
             assert len(help_info["definition"]) > 0
 
     def test_page5_fields_have_help(self, ref_data):
-        """Page 5 fields (lum, atm, minute) have help text."""
-        for field in ["lum", "atm", "minute"]:
+        """Page 5 fields (lum, atm, time_bucket) have help text."""
+        for field in ["lum", "atm", "time_bucket"]:
             help_info = get_field_help(ref_data, field)
             assert help_info is not None, f"Page 5 field '{field}' missing help"
             assert len(help_info["definition"]) > 0

@@ -214,7 +214,7 @@ def update_form_complete_status() -> None:
     required_fields = [
         "dep", "lum", "atm", "catr", "agg", "int", "circ",
         "col", "vma_bucket", "catv_family_4", "manv_mode",
-        "driver_age_bucket", "choc_mode", "driver_trajet_family", "minute"
+        "driver_age_bucket", "choc_mode", "driver_trajet_family", "time_bucket"
     ]
 
     inputs = st.session_state.prediction_inputs
