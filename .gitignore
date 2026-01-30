@@ -1,0 +1,30 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Data exports / large files
+*.csv
+*.parquet
+
+# Notebooks
+*.ipynb
+.ipynb_checkpoints/
+notebooks/
+
+# Local env / secrets
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Spec Kit / agent prompts (may contain local credentials depending on tooling)
+.codex/
+
+# Local AI agent tooling (not needed in repo)
+.claude/

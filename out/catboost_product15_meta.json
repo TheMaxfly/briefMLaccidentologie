@@ -1,0 +1,40 @@
+{
+  "model_name": "catboost_product15",
+  "created_at": "2026-01-29T19:30:36",
+  "threshold": 0.47,
+  "features": [
+    "dep",
+    "lum",
+    "atm",
+    "catr",
+    "agg",
+    "int",
+    "circ",
+    "col",
+    "vma_bucket",
+    "catv_family_4",
+    "manv_mode",
+    "driver_age_bucket",
+    "choc_mode",
+    "driver_trajet_family",
+    "minute"
+  ],
+  "cat_features": [
+    "dep",
+    "lum",
+    "atm",
+    "catr",
+    "agg",
+    "int",
+    "circ",
+    "col",
+    "vma_bucket",
+    "catv_family_4",
+    "driver_age_bucket",
+    "driver_trajet_family"
+  ],
+  "notes": {
+    "decision_rule": "predict class=1 if proba>=threshold else 0",
+    "training": "product15 features, CatBoostClassifier"
+  }
+}
