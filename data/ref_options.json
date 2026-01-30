@@ -109,6 +109,7 @@
     {"code": "988", "label": "Nouvelle-Calédonie"}
   ],
   "lum": [
+    {"code": -1, "label": "Non renseigné"},
     {"code": 1, "label": "Plein jour"},
     {"code": 2, "label": "Crépuscule ou aube"},
     {"code": 3, "label": "Nuit sans éclairage public"},
@@ -310,5 +311,22 @@
     {"code": 57, "label": "57"},
     {"code": 58, "label": "58"},
     {"code": 59, "label": "59"}
-  ]
+  ],
+  "help_texts": {
+    "dep": "Code du département français où l'accident a eu lieu. La France métropolitaine compte 96 départements (01 à 95 + 2A/2B pour la Corse) et les départements d'outre-mer (971 à 988).",
+    "agg": "Localisation de l'accident par rapport à une agglomération. Indique si l'accident s'est produit en zone urbaine (en agglomération) ou en zone rurale (hors agglomération).",
+    "catr": "Catégorie de la route sur laquelle l'accident a eu lieu. Distingue les autoroutes, routes nationales, départementales, voies communales et autres types de voies.",
+    "vma_bucket": "Tranche de vitesse maximale autorisée sur le tronçon de route où l'accident s'est produit. Les tranches vont de 30 km/h ou moins jusqu'à plus de 130 km/h.",
+    "int": "Type d'intersection où l'accident a eu lieu. Distingue les accidents hors intersection de ceux survenus à un carrefour en X, T, Y, giratoire, etc.",
+    "circ": "Régime de circulation sur la voie où l'accident s'est produit. Indique si la route est à sens unique, bidirectionnelle, à chaussées séparées ou à voies d'affectation variable.",
+    "col": "Type de collision survenue lors de l'accident. Décrit la nature du choc : frontale, par l'arrière, par le côté, en chaîne, ou sans collision (véhicule seul).",
+    "choc_mode": "Point de choc initial sur le véhicule. Indique la zone du véhicule qui a subi le premier impact : avant, arrière, côté droit, côté gauche, ou chocs multiples/tonneaux.",
+    "manv_mode": "Manœuvre principale du véhicule au moment de l'accident. Décrit ce que faisait le conducteur : rouler tout droit, tourner, dépasser, stationner, etc.",
+    "driver_age_bucket": "Tranche d'âge du conducteur impliqué dans l'accident. Les tranches d'âge permettent d'identifier les profils à risque (jeunes conducteurs, seniors, etc.).",
+    "driver_trajet_family": "Type de trajet effectué par le conducteur au moment de l'accident. Distingue les trajets domicile-travail, courses, loisirs, utilisation professionnelle, etc.",
+    "catv_family_4": "Famille de véhicule impliqué dans l'accident. Regroupe les véhicules en 4 grandes catégories : voitures/utilitaires, deux/trois-roues motorisés, poids lourds/transports en commun, et usagers vulnérables.",
+    "lum": "Conditions d'éclairage au moment de l'accident. Distingue le plein jour, le crépuscule/aube, et les différentes conditions de nuit (avec ou sans éclairage public).",
+    "atm": "Conditions atmosphériques au moment de l'accident. Décrit la météo : normale, pluie (légère ou forte), neige/grêle, brouillard, vent fort, temps éblouissant ou couvert.",
+    "minute": "Minute de l'heure à laquelle l'accident s'est produit (0 à 59). La valeur -1 correspond à une minute non renseignée dans le procès-verbal."
+  }
 }

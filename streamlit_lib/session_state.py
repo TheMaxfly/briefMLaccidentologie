@@ -271,10 +271,10 @@ def generate_recap_table(prediction_inputs: dict[str, Any], reference_data: dict
             # Fallback to just showing the value if label not found
             value_label = str(field_value)
 
-        # Add row to table
+        # Add row to table (Code as str to avoid Arrow mixed-type error)
         rows.append({
             "Champ": field_label,
-            "Code": field_value,
+            "Code": str(field_value),
             "Libellé": value_label,
             "Page": page_number
         })

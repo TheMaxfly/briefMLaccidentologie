@@ -101,7 +101,7 @@ class TestUS08RecapTable:
         # Find row for "lum" field
         lum_row = recap_table[recap_table["Champ"] == "Conditions d'éclairage"]
         assert len(lum_row) == 1, "Should have exactly one row for lum"
-        assert lum_row["Code"].values[0] == 1, "lum code should be 1"
+        assert lum_row["Code"].values[0] == "1", "lum code should be '1'"
 
         # Find row for "dep" field
         dep_row = recap_table[recap_table["Champ"] == "Département"]

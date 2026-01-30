@@ -137,9 +137,13 @@ def parse_dropdown_value(formatted_value: str) -> str | int:
 
     code_str = formatted_value.split(" — ")[0]
 
-    # Try to convert to int, otherwise keep as string
+    # Try to convert to int only if it roundtrips cleanly (e.g. "1" -> 1 -> "1")
+    # This preserves leading zeros like "01" and non-numeric strings like "<=30"
     try:
-        return int(code_str)
+        int_val = int(code_str)
+        if str(int_val) == code_str:
+            return int_val
+        return code_str
     except ValueError:
         return code_str
 
@@ -165,7 +169,36 @@ def get_label_for_code(reference_data: dict[str, list[dict[str, Any]]], field_na
 
     options = reference_data[field_name]
     for opt in options:
-        if opt['code'] == code:
+        if opt['code'] == code or str(opt['code']) == str(code):
             return opt['label']
 
     raise ValueError(f"Code '{code}' not found in field '{field_name}'")
+
+
+def get_field_help(reference_data: dict[str, list[dict[str, Any]]], field_name: str) -> dict[str, Any] | None:
+    """
+    Get contextual help for a field: definition + code table.
+
+    Args:
+        reference_data: Loaded reference data from load_reference_data()
+        field_name: Name of the field (e.g., "lum", "dep")
+
+    Returns:
+        Dictionary with keys:
+        - "definition": str - French description of the field
+        - "codes": list[dict] - List of {"code": ..., "label": ...} options
+        Returns None if field_name is not found.
+    """
+    if field_name not in reference_data:
+        return None
+
+    help_texts = reference_data.get("help_texts", {})
+    definition = help_texts.get(field_name, "")
+
+    if not definition:
+        return None
+
+    return {
+        "definition": definition,
+        "codes": reference_data[field_name]
+    }
